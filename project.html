@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}House Price Prediction{% endblock %}
+{% block mainarea %}
+<div class="container">
+  <h1>Predict Your House Price</h1>
+  <form action="/predict" method="post">
+    <div class="form-group row">
+      <label for="location" class="col-sm-2 col-form-label">Location:</label>
+      <div class="col-sm-10">
+        <select name="loc" class="form-control">
+          {% for loc in locations %}
+          <option>{{ loc }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="size" class="col-sm-2 col-form-label">Size (sqft):</label>
+      <div class="col-sm-10">
+        <input type="text" name="size" class="form-control" placeholder="Enter size in square feet" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="bhk" class="col-sm-2 col-form-label">BHK:</label>
+      <div class="col-sm-10">
+        <select name="bhk" class="form-control">
+          {% for i in range(1, 9) %}
+          <option>{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="bath" class="col-sm-2 col-form-label">Bathrooms:</label>
+      <div class="col-sm-10">
+        <select name="bath" class="form-control">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-10 offset-sm-2">
+        <input type="submit" value="Predict" class="btn-primary" />
+      </div>
+    </div>
+  </form>
+
+  {% if pprice %}
+  <div class="alert alert-success">
+    <h2>Estimated Price: {{ pprice }} Lakhs</h2>
+  </div>
+  {% elif error %}
+  <div class="alert alert-danger">
+    <h2>Error: {{ error }}</h2>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
